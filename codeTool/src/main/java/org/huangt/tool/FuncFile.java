@@ -1,4 +1,4 @@
-package org.huangt.core;
+package org.huangt.tool;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;

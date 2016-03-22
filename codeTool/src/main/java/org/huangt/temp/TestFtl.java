@@ -1,14 +1,10 @@
 package org.huangt.temp;
 
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.huangt.core.FuncFile;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+import org.huangt.core.Field;
+import org.huangt.core.Factory.JavaBeanFactory;
 
 /** 
  * 类说明  ''
@@ -17,7 +13,7 @@ import freemarker.template.Template;
  */
 public class TestFtl {
 	public static void main(String[] args) throws Exception {
-		List<Object> list = new ArrayList<Object>();
+		/*List<Object> list = new ArrayList<Object>();
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("host", "helloWorld1111");
 		list.add(map);
@@ -35,7 +31,19 @@ public class TestFtl {
 		HashMap<String, Object> value = new HashMap<String, Object>();
 		value.put("qlist", list);
 		temp.process(value, sw);
-		FuncFile.insertFile("C://Users//dear-tao//Desktop//demo.txt", sw.toString());
+		FuncFile.insertFile("C://Users//dear-tao//Desktop//demo.txt", sw.toString());*/
+		
+		JavaBeanFactory jf = new JavaBeanFactory();
+		jf.setModleName("/view/javaBean.ftl");
+		jf.setTargetPath("C://Users//dear-tao//Desktop//bean//");
+		jf.setTargetPackage("foo");
+		CodeToolDbConnect db = CodeToolDbConnect.instance();
+//		List<String> tables = db.allTablesName();
+		
+		List<Field> fields = db.allFields("ST_ROLE");
+		jf.setTableName("ST_ROLE");
+		jf.setFields(fields);
+		jf.execute();
 		
 	}
 
