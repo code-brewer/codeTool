@@ -1,6 +1,5 @@
 package org.huangt.core;
 
-import java.util.HashMap;
 import java.util.List;
 
 /** 
@@ -9,35 +8,60 @@ import java.util.List;
  * @version 创建时间：2016-3-13 下午6:30:27 
  */
 public abstract class BaseFactory {
-	
+	/** 表名 */
 	private String tableName;
-	private String modleName;
-	private String targetPackage;
-	private String targetPath;
+	/** 包名 格式：目录1.目录2.目录3.目录4.目录5  则倒数第二的目录4为 命名空间  */
+	private String packageName;
+	/** 输出目录  */
+	private String outDir;
+	/** 模板路径  */
+	private String modulePath;
+	/** 主键  */
+	private String pk;
+	/** 表字段集合  */
 	private List<Field> fields;
+	/** 命名空间  */
+	private String nameSpace;
+	
+	public BaseFactory(String packageName,String tableName,List<Field> fields, String pk, String modulePath, String outDir) {
+		this.packageName = packageName;
+		this.tableName = tableName;
+		this.fields = fields;
+		this.pk = pk;
+		this.modulePath = modulePath;
+		this.outDir = outDir;
+		subNameSpace(packageName);
+	}
 	public String getTableName() {
 		return tableName;
 	}
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
-	public String getModleName() {
-		return modleName;
+	public String getPackageName() {
+		return packageName;
 	}
-	public void setModleName(String modleName) {
-		this.modleName = modleName;
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
-	public String getTargetPackage() {
-		return targetPackage;
+	
+	public String getOutDir() {
+		return outDir;
 	}
-	public void setTargetPackage(String targetPackage) {
-		this.targetPackage = targetPackage;
+	public void setOutDir(String outDir) {
+		this.outDir = outDir;
 	}
-	public String getTargetPath() {
-		return targetPath;
+	public String getModulePath() {
+		return modulePath;
 	}
-	public void setTargetPath(String targetPath) {
-		this.targetPath = targetPath;
+	public void setModulePath(String modulePath) {
+		this.modulePath = modulePath;
+	}
+	public String getPk() {
+		return pk;
+	}
+	public void setPk(String pk) {
+		this.pk = pk;
 	}
 	public List<Field> getFields() {
 		return fields;
@@ -45,22 +69,42 @@ public abstract class BaseFactory {
 	public void setFields(List<Field> fields) {
 		this.fields = fields;
 	}
+	public String getNameSpace() {
+		return nameSpace;
+	}
+	public void setNameSpace(String nameSpace) {
+		this.nameSpace = nameSpace;
+	}
+	
 	/**
-	 * 格式化表字段数据,翻译成本工厂需要的字段
+	 * 格式化表字段数据,翻译成本工厂需要bean
 	 */
-	public abstract void parseData();
+	public abstract BaseBean createBean();
+	
 	/**
-	 * 根据翻译的字段,生产相应文件
+	 * 根据翻译的bean生产相应文件
 	 * @throws Exception 
 	 */
-	public abstract void createFile() throws Exception;
+	public abstract void createFile(BaseBean baseBean) throws Exception;
 	
-	public void execute(){
-		parseData();
-		try {
-			createFile();
-		} catch (Exception e) {
-			e.printStackTrace();
+	/**
+	 * 根据包名 获取命名空间
+	 * @param packageName
+	 */
+	private void subNameSpace(String packageName){
+		if(packageName.indexOf(".")>=0){
+			packageName = packageName.substring(0,packageName.lastIndexOf("."));
+			if(packageName.indexOf("service") >= 0){
+				packageName = packageName.substring(0,packageName.lastIndexOf("."));
+			}
+			nameSpace = packageName.substring(packageName.lastIndexOf(".")+1,packageName.length());
+		}else{
+			nameSpace = packageName;
 		}
 	}
+	
+	protected String packageToPath(String packageName){
+		return packageName.replaceAll("\\.", "\\\\");
+	}
+	
 }

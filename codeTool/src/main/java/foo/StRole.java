@@ -2,106 +2,145 @@ package foo;
 
 import java.util.Date;
 
-
 public class StRole{
-	
-	private long id;
-	/**
-	*角色编号
-	*/
+
+	// Fields
+	/** 角色编号 */
 	private String pkid;
-	/**
-	*角色名称
-	*/
+	/** 角色名称 */
 	private String name;
-	/**
-	*状态
-	*/
+	/** 状态 */
 	private String status;
-	/**
-	*描述
-	*/
+	/** 描述 */
 	private String description;
-	/**
-	*创建人
-	*/
+	/** 创建人 */
 	private String createUser;
-	/**
-	*创建时间
-	*/
+	/** 创建时间 */
 	private Date createTime;
-	/**
-	*更新时间
-	*/
+	/** 更新时间 */
 	private Date updateTime;
-	/**
-	*更新人
-	*/
+	/** 更新人 */
 	private String updateUser;
 
+	// Constructors
 	
-	public void setPkid(String pkid){
+	/** default constructor */
+	public	StRole() {
+	}
+
+	// Property accessors
+	
+	/**
+	 * 设置pkid 属性值
+	 */
+	public void setPkid(String pkid) {
 		this.pkid = pkid;
 	}
 	
-	public String getPkid(){
+	/**
+	 * 获取 pkid 属性值
+	 */
+	public String getPkid() {
 		return this.pkid;
 	}
 	
-	public void setName(String name){
+	/**
+	 * 设置name 属性值
+	 */
+	public void setName(String name) {
 		this.name = name;
 	}
 	
-	public String getName(){
+	/**
+	 * 获取 name 属性值
+	 */
+	public String getName() {
 		return this.name;
 	}
 	
-	public void setStatus(String status){
+	/**
+	 * 设置status 属性值
+	 */
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
-	public String getStatus(){
+	/**
+	 * 获取 status 属性值
+	 */
+	public String getStatus() {
 		return this.status;
 	}
 	
-	public void setDescription(String description){
+	/**
+	 * 设置description 属性值
+	 */
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	
-	public String getDescription(){
+	/**
+	 * 获取 description 属性值
+	 */
+	public String getDescription() {
 		return this.description;
 	}
 	
-	public void setCreateUser(String createUser){
+	/**
+	 * 设置createUser 属性值
+	 */
+	public void setCreateUser(String createUser) {
 		this.createUser = createUser;
 	}
 	
-	public String getCreateUser(){
+	/**
+	 * 获取 createUser 属性值
+	 */
+	public String getCreateUser() {
 		return this.createUser;
 	}
 	
-	public void setCreateTime(Date createTime){
+	/**
+	 * 设置createTime 属性值
+	 */
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	
-	public Date getCreateTime(){
+	/**
+	 * 获取 createTime 属性值
+	 */
+	public Date getCreateTime() {
 		return this.createTime;
 	}
 	
-	public void setUpdateTime(Date updateTime){
+	/**
+	 * 设置updateTime 属性值
+	 */
+	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
 	
-	public Date getUpdateTime(){
+	/**
+	 * 获取 updateTime 属性值
+	 */
+	public Date getUpdateTime() {
 		return this.updateTime;
 	}
 	
-	public void setUpdateUser(String updateUser){
+	/**
+	 * 设置updateUser 属性值
+	 */
+	public void setUpdateUser(String updateUser) {
 		this.updateUser = updateUser;
 	}
 	
-	public String getUpdateUser(){
+	/**
+	 * 获取 updateUser 属性值
+	 */
+	public String getUpdateUser() {
 		return this.updateUser;
 	}
+	
 
 }

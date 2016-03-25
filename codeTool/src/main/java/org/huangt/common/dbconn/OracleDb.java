@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import org.huangt.common.DbConfBean;
 import org.huangt.common.DbConnectTool;
 import org.huangt.core.Field;
-import org.huangt.tool.FuncStatic;
 
 
 public abstract class OracleDb implements DbConnectTool {
@@ -165,16 +164,44 @@ public abstract class OracleDb implements DbConnectTool {
 		}
 		return list;
 	}
-	 
-	/**
-	 * 多个主键用逗号隔开
-	 * @param table
-	 * @return
-	 */
+	
 	public String getKeyFieldName(String table)
 	{ 
-		String key = new String();
-		
+		String key = "PKID";
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet resultSet = null;
+		try {
+			conn = this.getConnection(true);
+			stmt = conn.createStatement();
+			resultSet = stmt.executeQuery("SELECT ucs.COLUMN_NAME"
+					+ " FROM user_cons_columns ucs JOIN user_constraints uct ON ucs.constraint_name = uct.constraint_name"
+					+ " WHERE uct.constraint_type ='P' AND  ucs.table_name= '"+table+"'");
+			while (resultSet.next()){
+				key = resultSet.getString("COLUMN_NAME");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(resultSet != null)
+					resultSet.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			try {
+				if(stmt != null)
+					stmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			try {
+				if(conn != null)
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 		return key;
 	}
   

@@ -27,4 +27,11 @@ public interface DbConnectTool {
 	 */
 	public List<Field> allFields(String table);
 	
+	/**
+	 * 返回某个表的主键
+	 * @param table
+	 * @return
+	 */
+	public String getKeyFieldName(String table);
+	
 }

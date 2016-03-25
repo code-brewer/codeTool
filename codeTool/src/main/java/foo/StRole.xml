@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="system.StRole">
+
+<typeAlias alias="StRole" type="foo.StRole"/>
+
+    <resultMap id="StRoleMap" class="StRole">
+    	 	<result property="pkid" column="PKID"/>
+    	 	<result property="name" column="NAME"/>
+    	 	<result property="status" column="STATUS"/>
+    	 	<result property="description" column="DESCRIPTION"/>
+    	 	<result property="createUser" column="CREATE_USER"/>
+    	 	<result property="createTime" column="CREATE_TIME"/>
+    	 	<result property="updateTime" column="UPDATE_TIME"/>
+    	 	<result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <sql id="allColumns">
+    			PKID,
+    			NAME,
+    			STATUS,
+    			DESCRIPTION,
+    			CREATE_USER,
+    			CREATE_TIME,
+    			UPDATE_TIME,
+    			UPDATE_USER
+    </sql>
+
+    <sql id="dynamicWhere">
+	    	<isNotEmpty prepend="AND" property="pkid">
+	         PKID = #pkid#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="name">
+	         NAME = #name#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="status">
+	         STATUS = #status#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="description">
+	         DESCRIPTION = #description#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="createUser">
+	         CREATE_USER = #createUser#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="createTime">
+	         CREATE_TIME = #createTime#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="updateTime">
+	         UPDATE_TIME = #updateTime#
+	         </isNotEmpty>
+	    	<isNotEmpty prepend="AND" property="updateUser">
+	         UPDATE_USER = #updateUser#
+	         </isNotEmpty>
+    </sql>
+
+    <!-- select 普通分页查询 -->
+    <select id="select" parameterClass="java.util.HashMap" resultMap="StRoleMap">
+      SELECT <include refid="allColumns" /> 
+      FROM ST_ROLE 
+      <dynamic prepend="WHERE">
+         <include refid="dynamicWhere"/>
+      </dynamic>
+      <dynamic prepend="ORDER BY">
+         <isNotEmpty property="fieldSort"> $fieldSort$ </isNotEmpty>
+      </dynamic>
+    </select>
+
+    <!-- view  普通根据主键查询-->
+    <select id="view" parameterClass="java.lang.String"  resultMap="StRoleMap">
+      SELECT <include refid="allColumns" />
+	    	 FROM ST_ROLE WHERE PKID = #pkid#
+    </select>
+
+    <!-- insert 普通增加数据-->
+    <insert id="insert" parameterClass="StRole">
+      INSERT INTO ST_ROLE (<include refid="allColumns" />) 
+      VALUES(
+    			#pkid#,
+    			#name#,
+    			#status#,
+    			#description#,
+    			#createUser#,
+    			#createTime#,
+    			#updateTime#,
+    			#updateUser#
+        )
+    </insert>
+
+    <!-- update  普通根据主键更新数据-->
+    <update id="update" parameterClass="StRole">
+      UPDATE ST_ROLE 
+      <dynamic prepend="SET">
+	    	<isNotEmpty prepend="," property="pkid">PKID = #pkid#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="name">NAME = #name#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="status">STATUS = #status#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="description">DESCRIPTION = #description#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="createUser">CREATE_USER = #createUser#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="createTime">CREATE_TIME = #createTime#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="updateTime">UPDATE_TIME = #updateTime#</isNotEmpty>
+	    	<isNotEmpty prepend="," property="updateUser">UPDATE_USER = #updateUser#</isNotEmpty>
+      </dynamic>
+	    	 	WHERE PKID = #pkid#
+    </update>
+
+    <!-- delete  普通根据主键删除数据-->
+    <delete id="delete" parameterClass="java.lang.String">
+	    		DELETE FROM ST_ROLE WHERE PKID = #pkid#
+    </delete>
+ 	
+</sqlMap>
